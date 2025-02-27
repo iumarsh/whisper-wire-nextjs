@@ -2,13 +2,13 @@
 import mongoose, {Schema, Document} from "mongoose";
 
 export interface Message extends Document {
-    content: string;
+    content: string; //standard string type is small letter.
     createdAt: Date;
 }
 
 const MessageSchema: Schema<Message> = new Schema({
     content: {
-        type: String,
+        type: String, //for mongoose you have to write string in capital letters.
         required: true
     },
     createdAt: {
