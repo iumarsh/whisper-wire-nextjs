@@ -2,23 +2,28 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Next.js API (Server)",
             "type": "node",
             "request": "launch",
-            "name": "Debug Next.js App",
             "runtimeExecutable": "node",
-            "program": "${workspaceFolder}/node_modules/next/dist/bin/next",
-            "args": [
+            "runtimeArgs": [
+                "--inspect",
+                "./node_modules/next/dist/bin/next",
                 "dev"
             ],
-            "cwd": "${workspaceFolder}",
-            "autoAttachChildProcesses": true,
-            "sourceMaps": true,
-            "restart": true,
-            "outFiles": [
-                "${workspaceFolder}/.next/**/*.js"
-            ],
-            "env": {
-                "NODE_ENV": "development"
+            "port": 9229,
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Attach to Chrome (Frontend)",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}",
+            "sourceMapPathOverrides": {
+                "webpack:///./*": "${webRoot}/*"
             }
         }
     ]

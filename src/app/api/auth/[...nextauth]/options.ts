@@ -1,6 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
-// import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs'
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 
@@ -19,8 +19,8 @@ export const authOptions: NextAuthOptions = {
                 try {
                     const user = await UserModel.findOne({
                         $or: [
-                            { username: credentials.identifier.username }, //credentials.identifier can use this as well
-                            { email: credentials.identifier.email }
+                            { username: credentials.identifier }, //credentials.identifier can use this as well
+                            { email: credentials.identifier }
                         ]
                     })
                     if (!user) {
@@ -29,8 +29,7 @@ export const authOptions: NextAuthOptions = {
                     if (!user.isVerified) {
                         throw new Error('Please verify user before login')
                     }
-                    const isPasswordCorrect = true;
-                    // const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
+                    const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
                     if (isPasswordCorrect)
                         return user
                     else
